@@ -12,15 +12,16 @@ import (
 
 func main() {
 
-	if len(os.Args) != 2 {
+	if len(os.Args) != 3 {
 		fmt.Fprintf(os.Stderr, "Usage: %s <config-file-path>\n",
 			os.Args[0])
 		os.Exit(1)
 	}
 
 	configFile := os.Args[1]
+	groupId := os.Args[2]
 	conf := ReadConfig(configFile)
-	conf["group.id"] = "kafka-go-getting-started"
+	conf["group.id"] = string(groupId)
 	conf["auto.offset.reset"] = "earliest"
 
 	c, err := kafka.NewConsumer(&conf)
@@ -46,7 +47,7 @@ func main() {
 		default:
 			ev, err := c.ReadMessage(100 * time.Millisecond)
 			if err != nil {
-				// Errors are informational and automatically handled by the consumer
+				fmt.Errorf(err.Error())
 				continue
 			}
 			fmt.Printf("Consumed event from topic %s: key = %-10s value = %s\n",
