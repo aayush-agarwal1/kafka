@@ -12,14 +12,15 @@ import (
 
 func main() {
 
-	if len(os.Args) != 3 {
+	if len(os.Args) != 4 {
 		fmt.Fprintf(os.Stderr, "Usage: %s <config-file-path>\n",
 			os.Args[0])
 		os.Exit(1)
 	}
 
 	configFile := os.Args[1]
-	groupId := os.Args[2]
+	topic := os.Args[2]
+	groupId := os.Args[3]
 	conf := ReadConfig(configFile)
 	conf["group.id"] = string(groupId)
 	conf["auto.offset.reset"] = "earliest"
@@ -31,7 +32,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	topic := "example-123"
 	err = c.SubscribeTopics([]string{topic}, nil)
 	// Set up a channel for handling Ctrl-C, etc
 	sigchan := make(chan os.Signal, 1)

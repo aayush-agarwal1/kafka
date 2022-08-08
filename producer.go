@@ -10,15 +10,15 @@ import (
 
 func main() {
 
-	if len(os.Args) != 2 {
+	if len(os.Args) != 3 {
 		fmt.Fprintf(os.Stderr, "Usage: %s <config-file-path>\n",
 			os.Args[0])
 		os.Exit(1)
 	}
 	configFile := os.Args[1]
+	topic := os.Args[2]
 	conf := ReadConfig(configFile)
 
-	topic := "example-123"
 	p, err := kafka.NewProducer(&conf)
 
 	if err != nil {
