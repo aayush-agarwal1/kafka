@@ -18,7 +18,7 @@ func main() {
 	configFile := os.Args[1]
 	conf := ReadConfig(configFile)
 
-	topic := "purchases"
+	topic := "example-123"
 	p, err := kafka.NewProducer(&conf)
 
 	if err != nil {
